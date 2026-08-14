@@ -1,200 +1,291 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Ki Azadi 🇮🇳</title>
+    <title>Cartoon Independence Day Story</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap');
+
         body {
-            background-color: #000000;
-            color: #FFFFFF;
-            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+        }
+
+        #stage {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: linear-gradient(to bottom, #87CEEB, #FFFFFF);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
         }
 
-        .screen {
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            position: relative;
-        }
-
-        /* Animation Classes */
-        .fade-in { animation: fadeIn 2s ease-in; }
-        .fade-out { animation: fadeOut 1s ease-in forwards; }
-        .shake { animation: shake 0.5s; }
-        .pop-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-        @keyframes popIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .hero-card {
-            background: #222;
-            border: 2px solid #FF9933;
-            padding: 20px;
+        /* Title Style */
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: #FF9933;
+            text-shadow: 3px 3px 0 #000;
             margin: 10px;
-            border-radius: 10px;
-            display: inline-block;
-            width: 200px;
-            vertical-align: top;
+            z-index: 10;
         }
 
-        .flag-container {
-            font-size: 50px;
-            margin: 20px;
+        /* Character Containers */
+        .character {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            transition: all 0.5s ease;
+        }
+
+        /* Specific Character Styles */
+        .gandhiji { 
+            /* Using CSS to make a simple cartoon look if image fails */
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Gandhi_Ji_in_1942.jpg/320px-Gandhi_Ji_in_1942.jpg');
+            background-size: cover;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 0 20px rgba(255, 153, 51, 0.8);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .subhash {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Subhas_Chandra_Bose.jpg/320px-Subhas_Chandra_Bose.jpg');
+            background-size: cover;
+            border-radius: 10px;
+            border: 4px solid #000;
+            transform: scale(0.9);
+            animation: march 2s linear infinite;
+        }
+
+        .bhagat {
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Bhagat_Singh.jpg/320px-Bhagat_Singh.jpg');
+            background-size: cover;
+            border-radius: 10px;
+            border: 3px solid red;
+            animation: punch 1s ease-in-out infinite alternate;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes march {
+            0% { transform: translateX(-20px); }
+            50% { transform: translateX(20px); }
+            100% { transform: translateX(-20px); }
+        }
+
+        @keyframes punch {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scene Management */
+        .scene {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+        }
+
+        .active-scene {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .dialogue-box {
+            background: rgba(0,0,0,0.8);
+            color: #FFF;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 60%;
+            text-align: center;
+            border: 2px solid #FF9933;
+            margin-top: 20px;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        /* Flag Animation */
+        .flag {
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(to bottom, #FF9933 33%, #FFFFFF 33%, #FFFFFF 66%, #138808 66%);
+            position: relative;
+            animation: wave 2s ease-in-out infinite alternate;
+            box-shadow: 0 0 10px gold;
+        }
+        .chakra {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 2px solid navy;
+            border-radius: 50%;
+            border-style: dashed;
+        }
+
+        @keyframes wave {
+            from { transform: skewX(-5deg); }
+            to { transform: skewX(5deg); }
         }
 
         #startBtn {
+            z-index: 100;
             padding: 20px 40px;
-            font-size: 20px;
-            background: #138808;
+            font-size: 2rem;
+            background: #FF9933;
             color: white;
-            border: none;
+            border: 4px solid white;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 50px;
+            font-family: 'Bangers', cursive;
+            box-shadow: 0 10px 0 #CC7A00;
+            transition: transform 0.1s;
+        }
+        #startBtn:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #CC7A00;
         }
 
-        .hidden { display: none; }
-        
-        /* Code Typing Effect */
-        .code-line {
-            color: #00FF00;
-            font-size: 14px;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
 
-    <div class="screen">
-        <!-- Start Button -->
-        <div id="startScreen">
-            <h1>🇮🇳 Independence Day Story</h1>
-            <p>Click below to start the story (Audio enabled)</p>
-            <button id="startBtn" onclick="startStory()">▶ Start Story</button>
+    <div id="stage">
+        <!-- Start Screen -->
+        <div id="startScreen" style="position:absolute; z-index:100; text-align:center;">
+            <h1 style="font-size: 4rem; color: #FF9933; text-shadow: 4px 4px 0 #000;">🇮🇳 Azadi Story 🇮🇳</h1>
+            <p style="font-size: 1.5rem; color: white;">Click to Start Cartoon Animation</p>
+            <button id="startBtn" onclick="startMovie()">🎬 START MOVIE</button>
         </div>
 
-        <!-- Story Container -->
-        <div id="storyContainer" class="hidden">
-            <div id="scene1" class="scene fade-in">
-                <h2>1947: The Bug (British Rule)</h2>
-                <div style="font-size: 60px;">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
-                <p>"Desh par ek saaya tha. Hum azad nahi the."</p>
-                <div class="code-line">const status = "Colony";</div>
+        <!-- Scene 1: The Colony -->
+        <div id="scene1" class="scene">
+            <h1>1947: The Villain</h1>
+            <div style="font-size: 150px; animation: shake 0.5s infinite;">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+            <div class="dialogue-box">
+                "Humari zindagi ka code corrupt tha. British Raj humari azadi block kar raha tha!"
             </div>
+        </div>
 
-            <div id="scene2" class="scene hidden fade-in">
-                <h2>The Heroes Assemble</h2>
-                <div class="hero-card pop-in">
-                    <div style="font-size:40px;">🧘‍♂️</div>
-                    <h3>Gandhiji</h3>
-                    <small>Ahimsa</small>
-                </div>
-                <div class="hero-card pop-in">
-                    <div style="font-size:40px;">👮‍♂️</div>
-                    <h3>Subhash Bose</h3>
-                    <small>Jai Hind</small>
-                </div>
-                <div class="hero-card pop-in">
-                    <div style="font-size:40px;">🧔‍♂️</div>
-                    <h3>Bhagat Singh</h3>
-                    <small>Sacrifice</small>
-                </div>
-                <div class="hero-card pop-in">
-                    <div style="font-size:40px;">📚</div>
-                    <h3>M.A. Azad</h3>
-                    <small>Knowledge</small>
-                </div>
+        <!-- Scene 2: The Heroes -->
+        <div id="scene2" class="scene">
+            <h1>Enter The Heroes</h1>
+            <div style="display: flex; gap: 20px;">
+                <div class="character gandhiji"></div>
+                <div class="character subhash"></div>
+                <div class="character bhagat"></div>
             </div>
-
-            <div id="scene3" class="scene hidden fade-in">
-                <h2>The Struggle 💥</h2>
-                <p style="color: red; font-weight: bold;">Jail, Saaz, Khoon...</p>
-                <div class="flag-container shake">🚩🚩🚩</div>
+            <div class="dialogue-box">
+                "Bapu, Netaji aur Bhagat Singh ne sangharsh shuru kiya!"
             </div>
+        </div>
 
-            <div id="scene4" class="scene hidden fade-in">
-                <h1>15 August 1947 🎉</h1>
-                <div style="font-size: 80px;">🇮🇳</div>
-                <h2 style="color: #FF9933;">AZADI!</h2>
-                <div class="code-line">status = "Independent";</div>
-                <div class="code-line">console.log("Jai Hind!");</div>
+        <!-- Scene 3: Freedom -->
+        <div id="scene3" class="scene">
+            <h1 style="color: #138808;">AZADI! 🎉</h1>
+            <div class="flag">
+                <div class="chakra"></div>
+            </div>
+            <div class="dialogue-box" style="border-color: #138808;">
+                "15 August 1947. Colony process terminated. India is free!"
             </div>
         </div>
     </div>
 
     <script>
-        function startStory() {
-            document.getElementById('startBtn').classList.add('hidden');
-            document.getElementById('storyContainer').classList.remove('hidden');
-            document.getElementById('scene1').classList.remove('hidden');
+        function startMovie() {
+            document.getElementById('startScreen').style.display = 'none';
             
-            // Speak first line
-            speak("1947. Desh par British raj tha. Ek bada sa bug humari zindagi mein ghuss gaya tha.");
-            
-            // Schedule scenes
-            setTimeout(() => showScene2(), 10000);
-            setTimeout(() => showScene3(), 20000);
-            setTimeout(() => showScene4(), 30000);
-        }
+            // Play Background Music (Using a simple generated tone for demo, 
+            // but in real use you'd link an MP3. Here we use Speech Synthesis for story)
+            playAudio();
 
-        function showScene2() {
-            document.getElementById('scene1').style.display = 'none';
-            document.getElementById('scene2').style.display = 'block';
-            speak("Bapu, Netaji, Bhagat Singh aur Maulana Azad ne sangharsh kiya. Unhe jail, saaz aur khoon ka samna karna pada.");
-        }
+            // Show Scene 1
+            setTimeout(() => {
+                document.getElementById('scene1').classList.add('active-scene');
+                speak("1947. Desh par British Raj tha. Ek bada sa saaya tha.");
+            }, 1000);
 
-        function showScene3() {
-            document.getElementById('scene2').style.display = 'none';
-            document.getElementById('scene3').style.display = 'block';
-            speak("Har sacrifice ne us colony wale system ko kamzor kiya. Lekin haar nahi maani.");
-        }
+            // Show Scene 2
+            setTimeout(() => {
+                document.getElementById('scene1').classList.remove('active-scene');
+                document.getElementById('scene2').classList.add('active-scene');
+                speak("Lekin heroes aaye. Bapu ki ahimsa, Netaji ki fursat, aur Bhagat Singh ki shaheedi.");
+            }, 12000);
 
-        function showScene4() {
-            document.getElementById('scene3').style.display = 'none';
-            document.getElementById('scene4').style.display = 'block';
-            speak("Aur phir wo din aaya. 15 August 1947. Colony band. Azadi shuru! Jai Hind!");
+            // Show Scene 3
+            setTimeout(() => {
+                document.getElementById('scene2').classList.remove('active-scene');
+                document.getElementById('scene3').classList.add('active-scene');
+                speak("Aur phir wo pal aaya. 15 August 1947. Azadi! Jai Hind!");
+            }, 25000);
         }
 
         function speak(text) {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'hi-IN'; // Hindi Language
-                utterance.rate = 0.9; // Slightly slow for drama
-                utterance.pitch = 1;
-                
-                // Try to find a Hindi voice
-                const voices = window.speechSynthesis.getVoices();
-                const hindiVoice = voices.find(v => v.lang.includes('hi'));
-                if (hindiVoice) {
-                    utterance.voice = hindiVoice;
-                }
-                
+                utterance.lang = 'hi-IN';
+                utterance.rate = 0.8;
+                utterance.pitch = 1.1; // Higher pitch for cartoon effect
                 window.speechSynthesis.speak(utterance);
             }
         }
+
+        function playAudio() {
+            // Simple beep to start
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.5);
+            osc.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.5);
+        }
     </script>
 </body>
-    </html>
+</html>
