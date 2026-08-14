@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Independence Day - Hacker Mode</title>
+    <title>Code Ki Azadi 🇮🇳</title>
     <style>
         body {
-            background-color: #000;
-            color: #0f0;
+            background-color: #000000;
+            color: #FFFFFF;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
@@ -16,63 +16,185 @@
             margin: 0;
             overflow: hidden;
         }
-        #terminal {
-            font-size: 1.5rem;
-            max-width: 90%;
-            line-height: 1.5;
+
+        .screen {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            position: relative;
         }
-        .cursor {
+
+        /* Animation Classes */
+        .fade-in { animation: fadeIn 2s ease-in; }
+        .fade-out { animation: fadeOut 1s ease-in forwards; }
+        .shake { animation: shake 0.5s; }
+        .pop-in { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .hero-card {
+            background: #222;
+            border: 2px solid #FF9933;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
             display: inline-block;
-            width: 10px;
-            height: 20px;
-            background-color: #0f0;
-            animation: blink 1s infinite;
-            vertical-align: middle;
+            width: 200px;
+            vertical-align: top;
         }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+        .flag-container {
+            font-size: 50px;
+            margin: 20px;
+        }
+
+        #startBtn {
+            padding: 20px 40px;
+            font-size: 20px;
+            background: #138808;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .hidden { display: none; }
+        
+        /* Code Typing Effect */
+        .code-line {
+            color: #00FF00;
+            font-size: 14px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="terminal">
-        <span id="output"></span><span class="cursor"></span>
+
+    <div class="screen">
+        <!-- Start Button -->
+        <div id="startScreen">
+            <h1>🇮🇳 Independence Day Story</h1>
+            <p>Click below to start the story (Audio enabled)</p>
+            <button id="startBtn" onclick="startStory()">▶ Start Story</button>
+        </div>
+
+        <!-- Story Container -->
+        <div id="storyContainer" class="hidden">
+            <div id="scene1" class="scene fade-in">
+                <h2>1947: The Bug (British Rule)</h2>
+                <div style="font-size: 60px;">🏴󠁧󠁢󠁥󠁮󠁧󠁿</div>
+                <p>"Desh par ek saaya tha. Hum azad nahi the."</p>
+                <div class="code-line">const status = "Colony";</div>
+            </div>
+
+            <div id="scene2" class="scene hidden fade-in">
+                <h2>The Heroes Assemble</h2>
+                <div class="hero-card pop-in">
+                    <div style="font-size:40px;">🧘‍♂️</div>
+                    <h3>Gandhiji</h3>
+                    <small>Ahimsa</small>
+                </div>
+                <div class="hero-card pop-in">
+                    <div style="font-size:40px;">👮‍♂️</div>
+                    <h3>Subhash Bose</h3>
+                    <small>Jai Hind</small>
+                </div>
+                <div class="hero-card pop-in">
+                    <div style="font-size:40px;">🧔‍♂️</div>
+                    <h3>Bhagat Singh</h3>
+                    <small>Sacrifice</small>
+                </div>
+                <div class="hero-card pop-in">
+                    <div style="font-size:40px;">📚</div>
+                    <h3>M.A. Azad</h3>
+                    <small>Knowledge</small>
+                </div>
+            </div>
+
+            <div id="scene3" class="scene hidden fade-in">
+                <h2>The Struggle 💥</h2>
+                <p style="color: red; font-weight: bold;">Jail, Saaz, Khoon...</p>
+                <div class="flag-container shake">🚩🚩🚩</div>
+            </div>
+
+            <div id="scene4" class="scene hidden fade-in">
+                <h1>15 August 1947 🎉</h1>
+                <div style="font-size: 80px;">🇮🇳</div>
+                <h2 style="color: #FF9933;">AZADI!</h2>
+                <div class="code-line">status = "Independent";</div>
+                <div class="code-line">console.log("Jai Hind!");</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        const lines = [
-            "root@india:~# sudo init independence_protocol",
-            "> Loading modules... [OK]",
-            "> Decrypting freedom key... [OK]",
-            "> Target: India",
-            "> Year: 2026",
-            "> Status: UNRESTRICTED",
-            "",
-            "JAI HIND"
-        ];
+        function startStory() {
+            document.getElementById('startBtn').classList.add('hidden');
+            document.getElementById('storyContainer').classList.remove('hidden');
+            document.getElementById('scene1').classList.remove('hidden');
+            
+            // Speak first line
+            speak("1947. Desh par British raj tha. Ek bada sa bug humari zindagi mein ghuss gaya tha.");
+            
+            // Schedule scenes
+            setTimeout(() => showScene2(), 10000);
+            setTimeout(() => showScene3(), 20000);
+            setTimeout(() => showScene4(), 30000);
+        }
 
-        let lineIndex = 0;
-        let charIndex = 0;
-        const output = document.getElementById("output");
+        function showScene2() {
+            document.getElementById('scene1').style.display = 'none';
+            document.getElementById('scene2').style.display = 'block';
+            speak("Bapu, Netaji, Bhagat Singh aur Maulana Azad ne sangharsh kiya. Unhe jail, saaz aur khoon ka samna karna pada.");
+        }
 
-        function typeWriter() {
-            if (lineIndex < lines.length) {
-                if (charIndex < lines[lineIndex].length) {
-                    output.innerHTML += lines[lineIndex].charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeWriter, 50);
-                } else {
-                    output.innerHTML += "<br>";
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeWriter, 600);
+        function showScene3() {
+            document.getElementById('scene2').style.display = 'none';
+            document.getElementById('scene3').style.display = 'block';
+            speak("Har sacrifice ne us colony wale system ko kamzor kiya. Lekin haar nahi maani.");
+        }
+
+        function showScene4() {
+            document.getElementById('scene3').style.display = 'none';
+            document.getElementById('scene4').style.display = 'block';
+            speak("Aur phir wo din aaya. 15 August 1947. Colony band. Azadi shuru! Jai Hind!");
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'hi-IN'; // Hindi Language
+                utterance.rate = 0.9; // Slightly slow for drama
+                utterance.pitch = 1;
+                
+                // Try to find a Hindi voice
+                const voices = window.speechSynthesis.getVoices();
+                const hindiVoice = voices.find(v => v.lang.includes('hi'));
+                if (hindiVoice) {
+                    utterance.voice = hindiVoice;
                 }
+                
+                window.speechSynthesis.speak(utterance);
             }
         }
-        
-        // Start typing after 1 second
-        setTimeout(typeWriter, 1000);
     </script>
 </body>
-</html>
+    </html>
